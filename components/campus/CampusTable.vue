@@ -13,15 +13,15 @@
                 </q-btn-group>
             </q-td>
         </template>
-        <template v-slot:no-data="{ icon, message, filter }">
+        <template v-slot:no-data="{ icon, message }">
             <div class="full-width row flex-center text-primary q-gutter-sm">
                 <span>{{ message }}</span>
-                <q-icon size="2em" :name="filter ? 'filter_b_and_w' : icon" />
+                <q-icon size="2em" :name="icon" />
             </div>
         </template>
     </q-table>
 </template>
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import Actions from 'components/table_components/ActionButton.vue';
 import { useCampusStore } from 'stores/campus';

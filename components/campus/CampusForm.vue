@@ -52,13 +52,13 @@
         </div>
     </q-slide-transition>
 </template>
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useCampusStore } from 'stores/campus';
 import { Notify } from 'quasar';
 const campusStore = useCampusStore();
 
-import { requireRules } from 'validationRules/rules';
+import { requireRules } from 'assets/validationRules/rules';
 
 const formEl = ref();
 watch(
@@ -72,8 +72,8 @@ watch(
     }
 );
 
-function submitForm(type) {
-    formEl.value.validate().then((success) => {
+function submitForm(type: string) {
+    formEl.value.validate().then((success: boolean) => {
         if (success) {
             if (type == 'add') {
                 campusStore.onFormInsert();
