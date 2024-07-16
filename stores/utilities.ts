@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Notify, Dialog } from 'quasar';
+import { Notify, Dialog, QTableProps } from 'quasar';
 import { web } from 'boot/axios';
 
 export const useUtilitiesStore = defineStore('utilities', () => {
@@ -30,7 +30,7 @@ export const useUtilitiesStore = defineStore('utilities', () => {
         return formData;
     }
 
-    const ExportDataReport = async (data: unknown, headers: string[], toolbarTitle: string) => {
+    const ExportDataReport = async (data: Record<string, string | number | undefined>[], headers: QTableProps['columns'], toolbarTitle: string) => {
         let typeReport = '';
 
         Dialog.create({

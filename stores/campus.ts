@@ -36,7 +36,7 @@ export const useCampusStore = defineStore('campus', () => {
         rowsNumber: 10,
     });
 
-    const headers = ref([
+    const headers = ref<QTableProps['columns']>([
         { name: 'code', label: 'Code', field: 'code', align: 'left' },
         { name: 'description', label: 'Description', field: 'description', align: 'left' },
         { name: 'campus_name', label: 'Campus Name', field: 'campus_name', align: 'left' },
@@ -180,5 +180,9 @@ export const useCampusStore = defineStore('campus', () => {
         return result ? result.label : '';
     }
 
-    return { createForm, abortForm, modifyForm, onFormDelete, onFormUpdate, onFormInsert, fetchItems, getCampusTypeDescription, search, form, saveBtnLabel, loadingSubmit, isEdit, campusType, formEl, pagination, loading, serverItems, headers };
+    function exportData() {
+        utilitiesStore.ExportDataReport(serverItems.value, headers.value, 'Campus');
+    }
+
+    return { createForm, abortForm, modifyForm, onFormDelete, onFormUpdate, onFormInsert, fetchItems, getCampusTypeDescription, exportData, search, form, saveBtnLabel, loadingSubmit, isEdit, campusType, formEl, pagination, loading, serverItems, headers };
 });
