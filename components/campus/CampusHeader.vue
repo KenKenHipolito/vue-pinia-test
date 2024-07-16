@@ -13,7 +13,7 @@
             </q-toolbar>
             <q-separator color="white" class="tw-mb-2" />
             <q-toolbar class="tw-pb-2">
-                <q-input class="tw-w-1/2" color="grey-9" bg-color="grey-4" outlined v-model="campusStore.search" label="Search..." clearable="">
+                <q-input class="tw-w-1/2" color="grey-9" bg-color="grey-4" outlined v-model="campusStore.search" label="Search..." :clearable="false">
                     <template v-slot:append>
                         <q-icon name="search" />
                     </template>
@@ -37,7 +37,7 @@
         </div>
     </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { useCampusStore } from 'stores/campus';
 const campusStore = useCampusStore();
 </script>
