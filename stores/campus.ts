@@ -97,7 +97,7 @@ export const useCampusStore = defineStore('campus', () => {
                 const [success, response] = await storeRequest.deleteRequest('campus', item.id);
                 if (success == 'Success') {
                     Notify.create({ type: 'positive', message: response.msg });
-                    const index = serverItems.value.findIndex((index) => index.id === item.data.id);
+                    const index: number = serverItems.value.findIndex((serverItem) => serverItem.id === item.data.id);
                     serverItems.value.splice(index, 1);
                 } else {
                     utilitiesStore.ProcessOtherNotif(success, response.msg);
@@ -118,7 +118,7 @@ export const useCampusStore = defineStore('campus', () => {
 
         if (success == 'Success') {
             Notify.create({ type: 'positive', message: response.msg });
-            const index: number = serverItems.value.findIndex((item: Item) => form.value.id === item.id);
+            const index: number = serverItems.value.findIndex((serverItem) => form.value.id === serverItem.id);
             serverItems.value.splice(index, 1, response.data);
             abortForm();
         } else {
