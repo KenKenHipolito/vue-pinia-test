@@ -4,7 +4,7 @@ import { useUtilitiesStore } from 'stores/utilities';
 import { Notify, Dialog, QTableProps } from 'quasar';
 import { Pagination } from 'assets/type';
 
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 interface Item {
     id?: number;
@@ -54,8 +54,9 @@ export const useCampusStore = defineStore('campus', () => {
     const loading = ref(false);
     const loadingSubmit = ref(false);
     const isEdit = ref(false);
-    const saveBtnLabel = ref('Save');
     const formEl = ref();
+
+    const saveBtnLabel = computed(() => (isEdit.value ? 'Update' : 'Save'));
 
     const campusType = ref<CampusType[]>([
         { label: 'Company-Owned', value: 'CO' },
@@ -68,21 +69,18 @@ export const useCampusStore = defineStore('campus', () => {
 
     function createForm() {
         isEdit.value = true;
-        saveBtnLabel.value = 'Save';
         form.value = createInitialItemState();
         formEl.value = 'reset';
     }
 
     function abortForm() {
         isEdit.value = false;
-        saveBtnLabel.value = 'Save';
         form.value = createInitialItemState();
         formEl.value = 'reset';
     }
 
     function modifyForm(item: { data: Item }) {
         isEdit.value = true;
-        saveBtnLabel.value = 'Update';
         form.value = Object.assign({}, item.data);
     }
 
@@ -144,7 +142,7 @@ export const useCampusStore = defineStore('campus', () => {
         }
     }
 
-    async function fetchItems(props: QTableProps) {
+    async function fetchItems(props: { pagination: QTableProps['pagination'] }) {
         const { page, sortBy, descending } = props.pagination ?? {};
         let { rowsPerPage } = props.pagination ?? {};
         pagination.value.page = page;
