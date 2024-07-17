@@ -37,9 +37,9 @@
                         <div class="col-12 col-md-4 col-lg-3">
                             <div class="tw-flex q-gutter-sm float-left lt-md:tw-w-full">
                                 <div class="tw-flex-auto">
-                                    <q-btn push size="medium" v-if="campusStore.saveBtnLabel == 'Save'" :loading="campusStore.loadingSubmit" color="positive" class="tw-mt-2 lt-md:tw-w-full" @click="submitForm('add')" icon="save" :label="campusStore.saveBtnLabel"></q-btn>
+                                    <q-btn push size="medium" v-if="campusStore.saveBtnLabel == 'Save'" :loading="campusStore.loadingSubmit" color="positive" class="tw-mt-2 lt-md:tw-w-full" @click="submitForm(false)" icon="save" :label="campusStore.saveBtnLabel"></q-btn>
 
-                                    <q-btn push size="medium" v-else :loading="campusStore.loadingSubmit" color="positive" class="tw-mt-2 lt-md:tw-w-full" @click="submitForm('update')" icon="save" :label="campusStore.saveBtnLabel"></q-btn>
+                                    <q-btn push size="medium" v-else :loading="campusStore.loadingSubmit" color="positive" class="tw-mt-2 lt-md:tw-w-full" @click="submitForm(true)" icon="save" :label="campusStore.saveBtnLabel"></q-btn>
                                 </div>
                                 <div class="tw-flex-auto">
                                     <q-btn push color="grey-4" class="tw-mt-2 text-black lt-md:tw-w-full" size="medium" @click="campusStore.abortForm()" icon="cancel" label="Cancel"></q-btn>
@@ -72,14 +72,10 @@ watch(
     }
 );
 
-function submitForm(type: string) {
+function submitForm(isUpdate: boolean) {
     formEl.value.validate().then((success: boolean) => {
         if (success) {
-            if (type == 'add') {
-                campusStore.onFormInsert();
-            } else if (type == 'update') {
-                campusStore.onFormUpdate();
-            }
+            campusStore.handleFormSubmit(isUpdate);
         } else {
             Notify.create({ type: 'negative', message: 'Please check all input in the form if valid' });
         }

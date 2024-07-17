@@ -6,10 +6,10 @@
             </q-td>
         </template>
 
-        <template v-slot:body-cell-id="props">
+        <template v-slot:body-cell-action="props">
             <q-td :props="props">
                 <q-btn-group push>
-                    <Actions :item="props.row" @removed="campusStore.onFormDelete" @edit="campusStore.onFormUpdate" />
+                    <Actions :item="props.row" @removed="campusStore.onFormDelete" @edit="campusStore.modifyForm" />
                 </q-btn-group>
             </q-td>
         </template>

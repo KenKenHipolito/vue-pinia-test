@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia';
 import { Notify, Dialog, QTableProps } from 'quasar';
 import { web } from 'boot/axios';
+import { useRequestStore } from 'stores/request_action';
 
 export const useUtilitiesStore = defineStore('utilities', () => {
-    const ProcessOtherNotif = (code: string, message: string) => {
+    const storeRequest = useRequestStore();
+
+    const processOtherNotif = (code: string, message: string) => {
         if (code == 'Error') {
             Notify.create({ type: 'negative', message: message });
         } else if (code == 'Info') {
@@ -28,6 +31,27 @@ export const useUtilitiesStore = defineStore('utilities', () => {
             }
         }
         return formData;
+    }
+
+    async function tableInitiator(props: { pagination: QTableProps['pagination'] }, totalItems: number, search: string, headers: QTableProps['columns'], filter: Record<string, null>, endpoint: string) {
+        const { page, sortBy, descending } = props.pagination ?? {};
+        let { rowsPerPage } = props.pagination ?? {};
+
+        const sortOn = descending ? 'desc' : 'asc';
+        if (rowsPerPage == 0) {
+            rowsPerPage = totalItems;
+        }
+
+        const [success, response] = await storeRequest.fetcherRequest(endpoint, {
+            page: page,
+            items: rowsPerPage,
+            search: search,
+            columns: headers,
+            filter: filter,
+            sortBy: sortBy,
+            sortOn: sortOn,
+        });
+        return [success, response, rowsPerPage];
     }
 
     const ExportDataReport = async (data: Record<string, string | number | undefined>[], headers: QTableProps['columns'], toolbarTitle: string) => {
@@ -66,5 +90,5 @@ export const useUtilitiesStore = defineStore('utilities', () => {
                 }
             });
     };
-    return { ProcessOtherNotif, createFormDataFromItem, ExportDataReport };
+    return { processOtherNotif, createFormDataFromItem, tableInitiator, ExportDataReport };
 });

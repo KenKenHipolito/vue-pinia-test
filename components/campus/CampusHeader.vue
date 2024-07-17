@@ -5,12 +5,6 @@
                 <q-toolbar-title>Campus</q-toolbar-title>
             </q-toolbar>
             <q-separator color="white" />
-            <q-toolbar :inset="$q.screen.lt.md ? false : true">
-                <q-breadcrumbs active-color="white" style="font-size: 16px">
-                    <q-breadcrumbs-el label="Processs" icon="published_with_changes" />
-                    <q-breadcrumbs-el label="Campus" />
-                </q-breadcrumbs>
-            </q-toolbar>
             <q-separator color="white" class="tw-mb-2" />
             <q-toolbar class="tw-pb-2">
                 <q-input class="tw-w-1/2" color="grey-9" bg-color="grey-4" outlined v-model="campusStore.search" label="Search..." :clearable="false">
